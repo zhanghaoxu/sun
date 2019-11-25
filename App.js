@@ -47,7 +47,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <StatusBar hidden={false} backgroundColor={statusBarColor} />
+        <StatusBar hidden={false} backgroundColor={this.state.statusBarColor} />
         <View style={styles.container}>
           <AppNavigator />
         </View>
