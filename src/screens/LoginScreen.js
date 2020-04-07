@@ -6,7 +6,8 @@ export default class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
-      text: '',
+      email: '',
+      password: '',
     };
   }
 
@@ -20,15 +21,15 @@ export default class LoginScreen extends React.Component {
         <TextInput
           label="Email"
           style={styles.inputBox}
-          value={this.state.text}
-          onChangeText={text => this.setState({text})}
+          value={this.state.email}
+          onChangeText={email => this.setState({email})}
         />
         <TextInput
           label="password"
           style={styles.inputBox}
           secureTextEntry={true}
-          value={this.state.text}
-          onChangeText={text => this.setState({text})}
+          value={this.state.password}
+          onChangeText={password => this.setState({password})}
         />
         <Button
           style={styles.login}
@@ -42,8 +43,6 @@ export default class LoginScreen extends React.Component {
           icon="camera"
           mode="contained"
           onPress={() => {
-            console.warn('111');
-            console.log(this.props.navigation);
             this.props.navigation.navigate('Register');
           }}>
           还没有账号？点我注册

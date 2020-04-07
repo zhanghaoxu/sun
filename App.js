@@ -15,7 +15,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       firstBackActionTime: 0,
-      statusBarColor: '#f6f6f6',
+      statusBarColor: '#6200ee',
     };
   }
   componentDidMount() {

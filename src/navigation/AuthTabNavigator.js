@@ -10,14 +10,10 @@ const AuthStack = createStackNavigator(
   {
     initialRouteName: 'Login',
     /* The header config from HomeScreen is now here */
-    navigationOptions: {
-      headerTitleStyle: {alignSelf: 'center'},
-      header: {
-        textAlign: 'center',
-        color: '#000',
-        fontWeight: 500,
-        justifyContent: 'space-between',
-        alignSelf: 'center',
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#6200ee',
       },
     },
   },
