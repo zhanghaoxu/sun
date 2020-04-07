@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Appbar} from 'react-native-paper';
-import {StatusBar, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 class WebViewHeader extends React.Component {
   constructor(props) {

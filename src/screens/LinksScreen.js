@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import MyWebView from '../components/MyWebView';
 import Config from 'react-native-config';
 export default function LinksScreen(props) {

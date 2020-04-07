@@ -6,11 +6,12 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "start-with-port":"react-native start --port 8789",
+    "start-with-port": "react-native start --port 8789",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.9.0",
     "react": "16.9.0",
     "react-native": "0.61.2",
     "react-native-config": "^0.12.0",

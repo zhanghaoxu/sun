@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text, BackHandler} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
-export default class LoginScreen extends React.Component {
+export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -10,17 +10,37 @@ export default class LoginScreen extends React.Component {
     };
   }
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  handleBackPress = () => {
+    //回退动作
+    this.props.navigation.pop();
+    return true;
+  };
+
   static navigationOptions = {
-    title: '请登录',
+    title: '请注册',
   };
 
   render() {
     return (
       <View style={styles.container}>
         <TextInput
-          label="Email"
+          label="Nick Name"
           style={styles.inputBox}
           value={this.state.text}
+          onChangeText={text => this.setState({text})}
+        />
+        <TextInput
+          label="Email"
+          value={this.state.text}
+          style={styles.inputBox}
           onChangeText={text => this.setState({text})}
         />
         <TextInput
@@ -34,19 +54,15 @@ export default class LoginScreen extends React.Component {
           style={styles.login}
           icon="camera"
           mode="contained"
-          onPress={() => console.log('Pressed')}>
-          立即登录
+          onPress={() => this.props.navigation.pop()}>
+          立即注册
         </Button>
         <Button
           style={styles.login}
           icon="camera"
           mode="contained"
-          onPress={() => {
-            console.warn('111');
-            console.log(this.props.navigation);
-            this.props.navigation.navigate('Register');
-          }}>
-          还没有账号？点我注册
+          onPress={() => this.props.navigation.pop()}>
+          返回登录页
         </Button>
       </View>
     );
