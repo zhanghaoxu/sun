@@ -15,7 +15,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       firstBackActionTime: 0,
-      statusBarColor: '#ddd',
+      statusBarColor: '#f6f6f6',
     };
   }
   componentDidMount() {
@@ -47,7 +47,11 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <StatusBar hidden={false} backgroundColor={this.state.statusBarColor} />
+        <StatusBar
+          barStyle="default"
+          hidden={false}
+          backgroundColor={this.state.statusBarColor}
+        />
         <View style={styles.container}>
           <AppNavigator />
         </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, AsyncStorage, StatusBar, View} from 'react-native';
+import {ActivityIndicator, AsyncStorage, View} from 'react-native';
 
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
@@ -20,7 +20,6 @@ class AuthLoadingScreen extends React.Component {
     return (
       <View>
         <ActivityIndicator />
-        <StatusBar barStyle="default" />
       </View>
     );
   }

@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "start-with-port":"react-native start --port 8789",
     "test": "jest",
     "lint": "eslint ."
   },
