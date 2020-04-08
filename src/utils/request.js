@@ -1,4 +1,5 @@
 import Config from 'react-native-config';
+import {Alert} from 'react-native';
 class Request {
   _request(options) {
     const url = options.url;
@@ -36,10 +37,22 @@ class Request {
       .then(json => {
         if (json.code === 200) {
           return json.data;
-        } else if (json.code === -2) {
+        } else {
+          Alert.alert(
+            '提示信息',
+            json.msg ? json.msg : '请求出现异常，请稍后再试',
+            [{text: '我知道了', onPress: () => console.log('OK Pressed')}],
+            {cancelable: false},
+          );
         }
       })
       .catch(e => {
+        Alert.alert(
+          '提示信息',
+          '网络出现异常，请检查网络连接',
+          [{text: '我知道了', onPress: () => console.log('OK Pressed')}],
+          {cancelable: false},
+        );
         console.log(e);
       });
   }

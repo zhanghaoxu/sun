@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, BackHandler, ToastAndroid} from 'react-native';
+import {StyleSheet, View, BackHandler, ToastAndroid, Alert} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {register as registerApi} from '@/apis/auth';
 import TextInputWithError from '@/components/TextInputWithError';
@@ -18,6 +18,19 @@ export default class RegisterScreen extends React.Component {
       passwordErrorMessage: '',
       repasswordErrorMessage: '',
     };
+  }
+
+  initState() {
+    this.setState({
+      nickName: '',
+      email: '',
+      password: '',
+      repassword: '',
+      nickNameErrorMessage: '',
+      emailErrorMessage: '',
+      passwordErrorMessage: '',
+      repasswordErrorMessage: '',
+    });
   }
 
   componentDidMount() {
@@ -85,8 +98,22 @@ export default class RegisterScreen extends React.Component {
         repassword: this.state.repassword,
       });
       if (v === 1) {
-        console.log('注册成功');
-        this.props.navigation.pop();
+        Alert.alert(
+          '注册成功！',
+          '是否立即去往登录页？',
+          [
+            {
+              text: '留在本页',
+              onPress: () => {
+                this.initState();
+              },
+              style: 'cancel',
+            },
+
+            {text: '去登录页', onPress: () => this.props.navigation.pop()},
+          ],
+          {cancelable: false},
+        );
       }
     } catch (e) {
       console.log(e);
