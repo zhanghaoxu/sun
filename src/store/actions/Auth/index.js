@@ -11,10 +11,14 @@ export function postIsLogin() {
   return dispatch => {
     return isLogin()
       .then(v => {
-        return dispatch(setIsLogin(v));
+        if (v) {
+          return dispatch(setIsLogin(v));
+        } else {
+          return dispatch(setIsLogin(0));
+        }
       })
       .catch(e => {
-        console.log(e);
+        return dispatch(setIsLogin(0));
       });
   };
 }

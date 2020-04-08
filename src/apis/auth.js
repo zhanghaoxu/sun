@@ -3,7 +3,6 @@ import request from '@/utils/request';
 export function isLogin() {
   return request.post({
     url: 'auth/isLogin',
-    needAuth: true,
   });
 }
 
