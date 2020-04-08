@@ -3,6 +3,7 @@ import {StyleSheet, View, BackHandler, ToastAndroid} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {register as registerApi} from '@/apis/auth';
 import TextInputWithError from '@/components/TextInputWithError';
+import {emailPattern} from '@/utils/pattern';
 export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,10 @@ export default class RegisterScreen extends React.Component {
       email: '',
       password: '',
       repassword: '',
+      nickNameErrorMessage: '',
+      emailErrorMessage: '',
+      passwordErrorMessage: '',
+      repasswordErrorMessage: '',
     };
   }
 
@@ -30,6 +35,48 @@ export default class RegisterScreen extends React.Component {
   };
 
   async register() {
+    if (!this.state.nickName) {
+      this.setState({
+        nickNameErrorMessage: '请输入昵称',
+      });
+      return;
+    }
+
+    if (!this.state.email) {
+      this.setState({
+        emailErrorMessage: '请输入邮箱',
+      });
+      return;
+    }
+
+    if (!emailPattern.test(this.state.email)) {
+      this.setState({
+        emailErrorMessage: '邮箱格式不正确',
+      });
+      return;
+    }
+
+    if (!this.state.password) {
+      this.setState({
+        passwordErrorMessage: '请输入密码',
+      });
+      return;
+    }
+
+    if (!this.state.repassword) {
+      this.setState({
+        repasswordErrorMessage: '请输入确认密码',
+      });
+      return;
+    }
+
+    if (this.state.password !== this.state.repassword) {
+      this.setState({
+        repasswordErrorMessage: '两次密码输入不一致',
+      });
+      return;
+    }
+
     try {
       let v = await registerApi({
         nickName: this.state.nickName,
@@ -38,6 +85,8 @@ export default class RegisterScreen extends React.Component {
         repassword: this.state.repassword,
       });
       if (v === 1) {
+        console.log('注册成功');
+        this.props.navigation.pop();
       }
     } catch (e) {
       console.log(e);
@@ -52,28 +101,35 @@ export default class RegisterScreen extends React.Component {
     return (
       <View style={styles.container}>
         <TextInputWithError
-          error={true}
           label="Nick Name"
-          errorMessage="长度限制"
+          maxLength={30}
+          error={!!this.state.nickNameErrorMessage}
+          errorMessage={this.state.nickNameErrorMessage}
           style={styles.inputBox}
           value={this.state.nickName}
           onChangeText={nickName => this.setState({nickName})}
         />
-        <TextInput
+        <TextInputWithError
           label="Email"
+          error={!!this.state.emailErrorMessage}
+          errorMessage={this.state.emailErrorMessage}
           value={this.state.email}
           style={styles.inputBox}
           onChangeText={email => this.setState({email})}
         />
-        <TextInput
+        <TextInputWithError
           label="Password"
+          error={!!this.state.passwordErrorMessage}
+          errorMessage={this.state.passwordErrorMessage}
           style={styles.inputBox}
           secureTextEntry={true}
           value={this.state.password}
           onChangeText={password => this.setState({password})}
         />
-        <TextInput
+        <TextInputWithError
           label="Repassword"
+          error={!!this.state.repasswordErrorMessage}
+          errorMessage={this.state.repasswordErrorMessage}
           style={styles.inputBox}
           secureTextEntry={true}
           value={this.state.repassword}
