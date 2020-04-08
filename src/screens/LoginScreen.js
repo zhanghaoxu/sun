@@ -32,15 +32,15 @@ export default class LoginScreen extends React.Component {
           onChangeText={password => this.setState({password})}
         />
         <Button
-          style={styles.login}
-          icon="camera"
+          style={styles.loginButton}
+          icon="account"
           mode="contained"
           onPress={() => console.log('Pressed')}>
           立即登录
         </Button>
         <Button
-          style={styles.login}
-          icon="camera"
+          style={styles.registerButton}
+          icon="account-plus"
           mode="contained"
           onPress={() => {
             this.props.navigation.navigate('Register');
@@ -59,10 +59,15 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  login: {
+  registerButton: {
+    marginTop: 20,
+    opacity: 0.8,
+  },
+  loginButton: {
     marginTop: 30,
   },
   inputBox: {
+    marginBottom: 10,
     backgroundColor: 'transparent',
   },
 });

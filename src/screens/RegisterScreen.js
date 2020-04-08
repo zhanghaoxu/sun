@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text, BackHandler} from 'react-native';
+import {StyleSheet, View, BackHandler} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import {register as registerApi} from '@/apis/auth';
 export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,19 @@ export default class RegisterScreen extends React.Component {
     return true;
   };
 
+  register() {
+    registerApi({
+      nickName: this.state.nickName,
+      email: this.state.email,
+    })
+      .then(v => {
+        console.warn(v);
+      })
+      .catch(e => {
+        console.warn(e);
+      });
+  }
+
   static navigationOptions = {
     title: '请注册',
   };
@@ -47,32 +61,32 @@ export default class RegisterScreen extends React.Component {
           onChangeText={email => this.setState({email})}
         />
         <TextInput
-          label="password"
+          label="Password"
           style={styles.inputBox}
           secureTextEntry={true}
           value={this.state.password}
           onChangeText={password => this.setState({password})}
         />
         <TextInput
-          label="repassword"
+          label="Repassword"
           style={styles.inputBox}
           secureTextEntry={true}
           value={this.state.repassword}
           onChangeText={repassword => this.setState({repassword})}
         />
         <Button
-          style={styles.login}
-          icon="camera"
+          style={styles.registerButton}
+          icon="account-plus"
           mode="contained"
-          onPress={() => this.props.navigation.pop()}>
+          onPress={() => this.register()}>
           立即注册
         </Button>
         <Button
-          style={styles.login}
-          icon="camera"
+          style={styles.loginButton}
+          icon="account"
           mode="contained"
           onPress={() => this.props.navigation.pop()}>
-          返回登录页
+          已有账号？点我登陆
         </Button>
       </View>
     );
@@ -86,10 +100,15 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  login: {
+  registerButton: {
     marginTop: 30,
   },
+  loginButton: {
+    marginTop: 20,
+    opacity: 0.8,
+  },
   inputBox: {
+    marginBottom: 10,
     backgroundColor: 'transparent',
   },
 });
