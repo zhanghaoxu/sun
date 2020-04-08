@@ -8,3 +8,10 @@ export function register(data) {
     data,
   });
 }
+
+export function login(data) {
+  return request.post({
+    url: 'auth/login',
+    data,
+  });
+}

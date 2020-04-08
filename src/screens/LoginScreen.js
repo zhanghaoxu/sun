@@ -1,6 +1,10 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Alert} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import TextInputWithError from '@/components/TextInputWithError';
+import {emailPattern} from '@/utils/pattern';
+import {login} from '@/apis/auth';
+import AsyncStorage from '@react-native-community/async-storage';
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +12,8 @@ export default class LoginScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
+      emailErrorMessage: '',
+      passwordErrorMessage: '',
     };
   }
 
@@ -15,17 +21,71 @@ export default class LoginScreen extends React.Component {
     title: '请登录',
   };
 
+  async login() {
+    if (!this.state.email) {
+      this.setState({
+        emailErrorMessage: '请输入邮箱',
+      });
+      return;
+    }
+
+    if (!emailPattern.test(this.state.email)) {
+      this.setState({
+        emailErrorMessage: '邮箱格式不正确',
+      });
+      return;
+    }
+
+    if (!this.state.password) {
+      this.setState({
+        passwordErrorMessage: '请输入密码',
+      });
+      return;
+    }
+    try {
+      let v = await login({
+        account: this.state.email,
+        password: this.state.password,
+      });
+
+      if (v.userToken) {
+        await AsyncStorage.setItem('userToken', v.userToken);
+        this.props.navigation.navigate('Main');
+      } else {
+        Alert.alert(
+          '提示信息',
+          '服务端出现错误，请稍后再试',
+          [
+            {
+              text: '我知道了',
+              onPress: () => {
+                console.log('button press');
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
+        <TextInputWithError
           label="Email"
-          style={styles.inputBox}
+          error={!!this.state.emailErrorMessage}
+          errorMessage={this.state.emailErrorMessage}
           value={this.state.email}
+          style={styles.inputBox}
           onChangeText={email => this.setState({email})}
         />
-        <TextInput
-          label="password"
+        <TextInputWithError
+          label="Password"
+          error={!!this.state.passwordErrorMessage}
+          errorMessage={this.state.passwordErrorMessage}
           style={styles.inputBox}
           secureTextEntry={true}
           value={this.state.password}
@@ -35,7 +95,7 @@ export default class LoginScreen extends React.Component {
           style={styles.loginButton}
           icon="account"
           mode="contained"
-          onPress={() => console.log('Pressed')}>
+          onPress={() => this.login()}>
           立即登录
         </Button>
         <Button

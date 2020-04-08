@@ -1,7 +1,12 @@
 import Config from 'react-native-config';
 import {Alert} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 class Request {
-  _request(options) {
+  async _getUserToken() {
+    let userToken = await AsyncStorage.getItem('userToken');
+    return userToken;
+  }
+  async _request(options) {
     const url = options.url;
     if (!url) {
       throw new Error('无效的请求参数：缺少url');
@@ -12,6 +17,11 @@ class Request {
       'moon-platform': 'app',
       'Content-Type': 'application/json',
     };
+
+    if (options.needAuth) {
+      let userToken = await this._getUserToken();
+      defaultHeaders['moon-session'] = userToken;
+    }
 
     if (!options.headers || typeof options.headers !== 'object') {
       options.headers = defaultHeaders;
