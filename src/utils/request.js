@@ -31,11 +31,9 @@ class Request {
 
     return fetch(Config.API_SERVICE_BASE_URL + url, options)
       .then(response => {
-        console.warn('response', response);
         return response.json();
       })
       .then(json => {
-        console.warn('josn:', json);
         if (json.code === 200) {
           return json.data;
         } else if (json.code === -2) {

@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, BackHandler} from 'react-native';
+import {StyleSheet, View, BackHandler, ToastAndroid} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {register as registerApi} from '@/apis/auth';
+import TextInputWithError from '@/components/TextInputWithError';
 export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,17 +29,19 @@ export default class RegisterScreen extends React.Component {
     return true;
   };
 
-  register() {
-    registerApi({
-      nickName: this.state.nickName,
-      email: this.state.email,
-    })
-      .then(v => {
-        console.warn(v);
-      })
-      .catch(e => {
-        console.warn(e);
+  async register() {
+    try {
+      let v = await registerApi({
+        nickName: this.state.nickName,
+        email: this.state.email,
+        password: this.state.password,
+        repassword: this.state.repassword,
       });
+      if (v === 1) {
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   static navigationOptions = {
@@ -48,8 +51,10 @@ export default class RegisterScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
+        <TextInputWithError
+          error={true}
           label="Nick Name"
+          errorMessage="长度限制"
           style={styles.inputBox}
           value={this.state.nickName}
           onChangeText={nickName => this.setState({nickName})}
@@ -108,7 +113,6 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   inputBox: {
-    marginBottom: 10,
     backgroundColor: 'transparent',
   },
 });

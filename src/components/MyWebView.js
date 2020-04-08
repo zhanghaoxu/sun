@@ -41,7 +41,6 @@ class WebViewScreen extends Component {
         });
         break;
       case 'openWebView':
-        console.warn('111');
         this.openNewWebView({
           url: data.url,
         });
