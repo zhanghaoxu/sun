@@ -1,7 +1,8 @@
 import React from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import store from '@/store';
+import {setIsLogin, postIsLogin} from '@/store/actions/Auth';
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
@@ -10,10 +11,21 @@ class AuthLoadingScreen extends React.Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
+    let isLogin = 0;
+    if (!userToken) {
+      store.dispatch(setIsLogin(0));
+      //无userToken
+    } else {
+      let result = await store.dispatch(postIsLogin());
+      isLogin = result.isLogin;
+    }
 
+    if (!isLogin) {
+      await AsyncStorage.removeItem('userToken');
+    }
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'Main' : 'Auth');
+    this.props.navigation.navigate('Main');
   };
 
   // Render any loading content that you like here

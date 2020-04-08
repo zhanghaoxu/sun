@@ -10,6 +10,7 @@ import {Provider} from 'react-redux';
 import store from '@/store/index';
 import AppNavigator from '@/navigation/AppNavigator';
 import SplashScreen from 'react-native-splash-screen';
+import NavigationService from '@/utils/navigationService';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -53,7 +54,11 @@ export default class App extends React.Component {
           backgroundColor={this.state.statusBarColor}
         />
         <View style={styles.container}>
-          <AppNavigator />
+          <AppNavigator
+            ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
         </View>
       </Provider>
     );

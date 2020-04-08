@@ -1,6 +1,7 @@
 import Config from 'react-native-config';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import NavigationService from '@/utils/navigationService';
 class Request {
   async _getUserToken() {
     let userToken = await AsyncStorage.getItem('userToken');
@@ -20,6 +21,14 @@ class Request {
 
     if (options.needAuth) {
       let userToken = await this._getUserToken();
+      if (!userToken) {
+        return new Promise(function(resolve, reject) {
+          reject({
+            code: '-4001',
+            msg: '接口认证限制',
+          });
+        });
+      }
       defaultHeaders['moon-session'] = userToken;
     }
 
@@ -47,6 +56,9 @@ class Request {
       .then(json => {
         if (json.code === 200) {
           return json.data;
+        } else if (json.code === -2) {
+          return null;
+          //NavigationService.navigate('Auth');
         } else {
           Alert.alert(
             '提示信息',
@@ -54,6 +66,7 @@ class Request {
             [{text: '我知道了', onPress: () => console.log('OK Pressed')}],
             {cancelable: false},
           );
+          return null;
         }
       })
       .catch(e => {
