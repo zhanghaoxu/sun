@@ -2,6 +2,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import colors from '@/constants/Colors';
 const AuthStack = createStackNavigator(
   {
     Login: LoginScreen,
@@ -11,9 +12,9 @@ const AuthStack = createStackNavigator(
     initialRouteName: 'Login',
     /* The header config from HomeScreen is now here */
     defaultNavigationOptions: {
-      headerTintColor: '#fff',
+      headerTintColor: colors.headerText,
       headerStyle: {
-        backgroundColor: '#6200ee',
+        backgroundColor: colors.main,
       },
     },
   },

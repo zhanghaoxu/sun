@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, View, Alert} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import TextInputWithError from '@/components/TextInputWithError';
 import {emailPattern} from '@/utils/pattern';
 import {login} from '@/apis/auth';
 import AsyncStorage from '@react-native-community/async-storage';
+
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);

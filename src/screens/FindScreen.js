@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MyWebView from '../components/MyWebView';
+import MyWebView from '@/components/MyWebView';
 import Config from 'react-native-config';
-export default function LinksScreen(props) {
+export default function FindScreen(props) {
   const webview_url = `${Config.WEBVIEW_BASE_URL}#/find`;
   return (
     <View style={styles.container}>
@@ -11,7 +11,7 @@ export default function LinksScreen(props) {
   );
 }
 
-LinksScreen.navigationOptions = {
+FindScreen.navigationOptions = {
   header: null,
 };
 

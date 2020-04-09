@@ -11,17 +11,25 @@ import store from '@/store/index';
 import AppNavigator from '@/navigation/AppNavigator';
 import SplashScreen from 'react-native-splash-screen';
 import NavigationService from '@/utils/navigationService';
+import Loading from '@/components/Loading';
+import colors from '@/constants/Colors';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       firstBackActionTime: 0,
-      statusBarColor: '#6200ee',
+      statusBarColor: colors.main,
+      loading: false,
     };
   }
   componentDidMount() {
     SplashScreen.hide();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    store.subscribe(() => {
+      this.setState({
+        loading: store.getState().global.loading,
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -53,7 +61,9 @@ export default class App extends React.Component {
           hidden={false}
           backgroundColor={this.state.statusBarColor}
         />
+
         <View style={styles.container}>
+          <Loading isVisible={this.state.loading} />
           <AppNavigator
             ref={navigatorRef => {
               NavigationService.setTopLevelNavigator(navigatorRef);

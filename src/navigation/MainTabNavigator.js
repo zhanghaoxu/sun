@@ -3,15 +3,15 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import WebViewScreen from '@/screens/WebView/index';
+import HomeContainer from '@/containers/HomeContainer';
+import FindContainer from '@/containers/FindContainer';
+import MyContainer from '@/containers/MyContainer';
+import WebViewContainer from '@/containers/WebViewContainer';
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
-    WebView: WebViewScreen,
+    Home: HomeContainer,
+    WebView: WebViewContainer,
   },
   {
     mode: 'modal',
@@ -33,10 +33,10 @@ const HomeStack = createStackNavigator(
   },
 );
 
-const LinksStack = createStackNavigator(
+const FindStack = createStackNavigator(
   {
-    Links: LinksScreen,
-    WebView: WebViewScreen,
+    Find: FindContainer,
+    WebView: WebViewContainer,
   },
   {
     mode: 'modal',
@@ -58,10 +58,10 @@ const LinksStack = createStackNavigator(
   },
 );
 
-const SettingsStack = createStackNavigator(
+const MyStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
-    WebView: WebViewScreen,
+    My: MyContainer,
+    WebView: WebViewContainer,
   },
   {
     mode: 'modal',
@@ -86,8 +86,8 @@ const SettingsStack = createStackNavigator(
 const tabNavigator = createBottomTabNavigator(
   {
     HomeStack,
-    LinksStack,
-    SettingsStack,
+    FindStack,
+    MyStack,
   },
   {
     initialRouteName: 'HomeStack',

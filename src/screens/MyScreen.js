@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, StatusBar} from 'react-native';
-import MyWebView from '../components/MyWebView';
+import {StyleSheet, View} from 'react-native';
+import MyWebView from '@/components/MyWebView';
 import Config from 'react-native-config';
-export default function SettingsScreen(props) {
+export default function MyScreen(props) {
   /**
    * Go ahead and delete ExpoConfigView and replace it with your content;
    * we just wanted to give you a quick view of your config.
@@ -15,7 +15,7 @@ export default function SettingsScreen(props) {
   );
 }
 
-SettingsScreen.navigationOptions = {
+MyScreen.navigationOptions = {
   header: null,
 };
 

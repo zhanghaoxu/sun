@@ -2,6 +2,7 @@ import Config from 'react-native-config';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NavigationService from '@/utils/navigationService';
+import loading from '@/utils/loading';
 class Request {
   async _getUserToken() {
     let userToken = await AsyncStorage.getItem('userToken');
@@ -49,8 +50,13 @@ class Request {
       options.body = JSON.stringify(data);
     }
 
+    if (options.loading) {
+      loading.show();
+    }
+
     return fetch(Config.API_SERVICE_BASE_URL + url, options)
       .then(response => {
+        loading.hide();
         return response.json();
       })
       .then(json => {
@@ -69,7 +75,11 @@ class Request {
           return null;
         }
       })
+      .then(v => {
+        return v;
+      })
       .catch(e => {
+        loading.hide();
         Alert.alert(
           '提示信息',
           '网络出现异常，请检查网络连接',

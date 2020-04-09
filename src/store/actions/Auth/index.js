@@ -11,6 +11,7 @@ export function postIsLogin() {
   return dispatch => {
     return isLogin()
       .then(v => {
+        console.log('v:', v);
         if (v) {
           return dispatch(setIsLogin(v));
         } else {

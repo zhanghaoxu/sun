@@ -1,8 +1,9 @@
 import React from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import store from '@/store';
 import {setIsLogin, postIsLogin} from '@/store/actions/Auth';
+import colors from '@/constants/Colors';
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
@@ -19,6 +20,7 @@ class AuthLoadingScreen extends React.Component {
     } else {
       try {
         let result = await store.dispatch(postIsLogin());
+
         isLogin = result.isLogin;
         if (!isLogin) {
           await AsyncStorage.removeItem('userToken');
@@ -36,11 +38,20 @@ class AuthLoadingScreen extends React.Component {
   // Render any loading content that you like here
   render() {
     return (
-      <View>
-        <ActivityIndicator />
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color={colors.main} />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default AuthLoadingScreen;
