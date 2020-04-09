@@ -5,7 +5,7 @@ import TextInputWithError from '@/components/TextInputWithError';
 import {emailPattern} from '@/utils/pattern';
 import {login} from '@/apis/auth';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import toast from '@/utils/toast';
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -104,7 +104,8 @@ export default class LoginScreen extends React.Component {
           icon="account-plus"
           mode="contained"
           onPress={() => {
-            this.props.navigation.navigate('Register');
+            toast.show('傻了点附近');
+            //this.props.navigation.navigate('Register');
           }}>
           还没有账号？点我注册
         </Button>

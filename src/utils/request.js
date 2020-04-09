@@ -3,6 +3,8 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NavigationService from '@/utils/navigationService';
 import loading from '@/utils/loading';
+import toast from '@/utils/toast';
+
 class Request {
   async _getUserToken() {
     let userToken = await AsyncStorage.getItem('userToken');
@@ -64,14 +66,12 @@ class Request {
           return json.data;
         } else if (json.code === -2) {
           return null;
+
           //NavigationService.navigate('Auth');
         } else {
-          Alert.alert(
-            '提示信息',
-            json.msg ? json.msg : '请求出现异常，请稍后再试',
-            [{text: '我知道了', onPress: () => console.log('OK Pressed')}],
-            {cancelable: false},
-          );
+          toast.show({
+            text: json.msg ? json.msg : '服务端错误',
+          });
           return null;
         }
       })

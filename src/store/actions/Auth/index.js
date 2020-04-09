@@ -19,6 +19,7 @@ export function postIsLogin() {
         }
       })
       .catch(e => {
+        console.log(e);
         return dispatch(setIsLogin(0));
       });
   };

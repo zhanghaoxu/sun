@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import store from '@/store';
 import {setIsLogin, postIsLogin} from '@/store/actions/Auth';
 import colors from '@/constants/Colors';
+import toast from '@/utils/toast';
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
@@ -20,7 +21,7 @@ class AuthLoadingScreen extends React.Component {
     } else {
       try {
         let result = await store.dispatch(postIsLogin());
-
+        console.log('result:', result);
         isLogin = result.isLogin;
         if (!isLogin) {
           await AsyncStorage.removeItem('userToken');
