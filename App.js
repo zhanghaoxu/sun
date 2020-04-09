@@ -74,8 +74,8 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <StatusBar
-          barStyle="default"
           hidden={false}
+          animated={true}
           backgroundColor={this.state.statusBarColor}
         />
 

@@ -5,11 +5,11 @@ export default function Toast(props) {
     <Snackbar
       visible={!!props.text}
       onDismiss={props.hideAction}
-      duration={3000}
+      duration={2500}
       action={{
         label: props.buttonName,
         onPress: () => {
-          props.pressHandler();
+          console.log(777);
         },
       }}>
       {props.text}

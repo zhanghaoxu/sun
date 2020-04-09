@@ -75,17 +75,11 @@ class Request {
           return null;
         }
       })
-      .then(v => {
-        return v;
-      })
       .catch(e => {
         loading.hide();
-        Alert.alert(
-          '提示信息',
-          '网络出现异常，请检查网络连接',
-          [{text: '我知道了', onPress: () => console.log('OK Pressed')}],
-          {cancelable: false},
-        );
+        toast.show({
+          text: '网络错误',
+        });
         console.log(e);
       });
   }
