@@ -7,7 +7,7 @@ import HomeContainer from '@/containers/HomeContainer';
 import FindContainer from '@/containers/FindContainer';
 import MyContainer from '@/containers/MyContainer';
 import WebViewContainer from '@/containers/WebViewContainer';
-
+import Colors from '@/constants/Colors';
 const HomeStack = createStackNavigator(
   {
     Home: HomeContainer,
@@ -24,10 +24,8 @@ const HomeStack = createStackNavigator(
 
       return {
         tabBarVisible,
-        tabBarLabel: '发现',
-        tabBarIcon: ({focused}) => (
-          <TabBarIcon focused={focused} name="ios-add" />
-        ),
+        tabBarLabel: '首页',
+        tabBarIcon: ({focused}) => <TabBarIcon focused={focused} name="home" />,
       };
     },
   },
@@ -51,7 +49,7 @@ const FindStack = createStackNavigator(
         tabBarVisible,
         tabBarLabel: '发现',
         tabBarIcon: ({focused}) => (
-          <TabBarIcon focused={focused} name="ios-add" />
+          <TabBarIcon focused={focused} name="search1" />
         ),
       };
     },
@@ -74,10 +72,8 @@ const MyStack = createStackNavigator(
 
       return {
         tabBarVisible,
-        tabBarLabel: '发现',
-        tabBarIcon: ({focused}) => (
-          <TabBarIcon focused={focused} name="ios-add" />
-        ),
+        tabBarLabel: '我的',
+        tabBarIcon: ({focused}) => <TabBarIcon focused={focused} name="user" />,
       };
     },
   },
@@ -92,6 +88,9 @@ const tabNavigator = createBottomTabNavigator(
   {
     initialRouteName: 'HomeStack',
     backBehavior: 'none',
+    tabBarOptions: {
+      activeTintColor: Colors.tabIconSelected,
+    },
   },
 );
 
