@@ -13,6 +13,16 @@ import SplashScreen from 'react-native-splash-screen';
 import NavigationService from '@/utils/navigationService';
 import Loading from '@/components/Loading';
 import colors from '@/constants/Colors';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: colors.main,
+  },
+};
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -71,15 +81,16 @@ export default class App extends React.Component {
           animated={true}
           backgroundColor={this.state.statusBarColor}
         />
-
-        <View style={styles.container}>
-          <Loading isVisible={this.state.loading} />
-          <AppNavigator
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
-          />
-        </View>
+        <PaperProvider theme={theme}>
+          <View style={styles.container}>
+            <Loading isVisible={this.state.loading} />
+            <AppNavigator
+              ref={navigatorRef => {
+                NavigationService.setTopLevelNavigator(navigatorRef);
+              }}
+            />
+          </View>
+        </PaperProvider>
       </Provider>
     );
   }

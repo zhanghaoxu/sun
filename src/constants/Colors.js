@@ -1,7 +1,9 @@
 const tintColor = '#2f95dc';
-const main = '#6200ee';
+const main = '#000';
+const accent = '#000';
 export default {
   main,
+  accent,
   tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: main,
