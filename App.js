@@ -12,8 +12,6 @@ import AppNavigator from '@/navigation/AppNavigator';
 import SplashScreen from 'react-native-splash-screen';
 import NavigationService from '@/utils/navigationService';
 import Loading from '@/components/Loading';
-import Toast from '@/components/Toast';
-import toastApi from '@/utils/toast';
 import colors from '@/constants/Colors';
 export default class App extends React.Component {
   constructor(props) {
@@ -34,18 +32,13 @@ export default class App extends React.Component {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     //全局状态监听
     store.subscribe(() => {
-      let needUpdateObj = {};
       let stateNew = store.getState().global;
       let stateOld = this.state;
       if (stateNew.loading !== stateOld.loading) {
-        needUpdateObj.loading = stateNew.loading;
+        this.setState({
+          loading: stateNew.loading,
+        });
       }
-      console.log('lall', stateNew.toasting, stateOld.toasting);
-      if (stateNew.toasting.text !== stateOld.toasting.text) {
-        needUpdateObj.toasting = stateNew.toasting;
-      }
-      console.log('lsdjf', needUpdateObj);
-      this.setState(needUpdateObj);
     });
   }
 
@@ -81,14 +74,6 @@ export default class App extends React.Component {
 
         <View style={styles.container}>
           <Loading isVisible={this.state.loading} />
-          <Toast
-            text={this.state.toasting.text}
-            buttonName={this.state.toasting.buttonName}
-            pressHandler={this.state.toasting.pressHandler}
-            hideAction={() => {
-              toastApi.hide();
-            }}
-          />
           <AppNavigator
             ref={navigatorRef => {
               NavigationService.setTopLevelNavigator(navigatorRef);

@@ -1,5 +1,4 @@
 import Config from 'react-native-config';
-import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NavigationService from '@/utils/navigationService';
 import loading from '@/utils/loading';
@@ -69,17 +68,13 @@ class Request {
 
           //NavigationService.navigate('Auth');
         } else {
-          toast.show({
-            text: json.msg ? json.msg : '服务端错误',
-          });
+          toast.show(json.msg ? json.msg : '服务端错误');
           return null;
         }
       })
       .catch(e => {
         loading.hide();
-        toast.show({
-          text: '网络错误',
-        });
+        toast.show('网络错误');
         console.log(e);
       });
   }

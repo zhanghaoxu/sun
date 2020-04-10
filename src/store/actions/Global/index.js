@@ -4,10 +4,3 @@ export function setLoadingState(v) {
     loading: v,
   };
 }
-
-export function setToastingState(v) {
-  return {
-    type: 'SET_TOASTING_STATE',
-    toasting: v,
-  };
-}
