@@ -6,9 +6,11 @@ export default function Loading(props) {
     <Modal isVisible={props.isVisible}>
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#ccc" />
-        <Text style={styles.textStyle}>
-          {props.text ? props.text : '请求发送中，请稍后...'}
-        </Text>
+        <View style={styles.textContainerStyle}>
+          <Text style={styles.textStyle}>
+            {props.text ? props.text : '加载中......'}
+          </Text>
+        </View>
       </View>
     </Modal>
   );
@@ -20,9 +22,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textContainerStyle: {
+    paddingTop: 20,
+  },
   textStyle: {
-    marginTop: 5,
     color: '#ccc',
-    fontSize: 12,
+    fontSize: 13,
   },
 });

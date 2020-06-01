@@ -1,5 +1,9 @@
+import Colors from '@/constants/Colors';
 const initialState = {
   loading: false,
+  statusBarHidden: false,
+  statusBarBackgroundColor: Colors.main,
+  statusBarTranslucent: false,
 };
 
 const GlobalReducers = (state = initialState, action) => {
