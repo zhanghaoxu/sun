@@ -30,11 +30,6 @@ export default class App extends React.Component {
       firstBackActionTime: 0,
       statusBarColor: colors.main,
       loading: false,
-      toasting: {
-        text: '',
-        buttonName: '',
-        pressHandler: () => {},
-      },
     };
   }
   componentDidMount() {

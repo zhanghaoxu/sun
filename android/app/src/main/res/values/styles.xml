@@ -7,7 +7,7 @@
         
     </style>
 
-    <style name="SplashTheme" parent="SplashScreen_SplashTheme">
+    <style name="SplashTheme" parent="SplashScreen_Fullscreen">
         <item name="android:background">@drawable/background_splash</item>
     </style>
 

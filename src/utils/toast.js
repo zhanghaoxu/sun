@@ -9,15 +9,15 @@ class Toasting {
     }
     this.__toast = Toast.show(options.text, {
       duration: options.duration ? options.duration : Toast.durations.SHORT,
-      position: options.position ? options.position : Toast.positions.TOP,
+      position: options.position ? options.position : 75,
       shadow: true,
       animation: true,
       hideOnPress: true,
-      opacity: 1,
+      opacity: options.opacity ? options.opacity : 0.9,
       delay: 0,
       backgroundColor: options.backgroundColor
         ? options.backgroundColor
-        : '#ddd',
+        : '#000',
       textColor: options.textColor ? options.textColor : '#fff',
       onShow: () => {
         // calls on toast\`s appear animation start
@@ -39,13 +39,27 @@ class Toasting {
   showInfo(text) {
     this.__show({
       text,
-      backgroundColor: '#fff',
-      textColor: '#000',
+      backgroundColor: '#000',
     });
   }
-  showWarning(text) {}
-  showError(text) {}
-  showSuccess(text) {}
+  showWarning(text) {
+    this.__show({
+      text,
+      backgroundColor: 'orange',
+    });
+  }
+  showError(text) {
+    this.__show({
+      text,
+      backgroundColor: 'red',
+    });
+  }
+  showSuccess(text) {
+    this.__show({
+      text,
+      backgroundColor: 'green',
+    });
+  }
   hide() {
     Toast.hide(this.__toast);
   }

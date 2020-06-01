@@ -53,19 +53,7 @@ export default class LoginScreen extends React.Component {
         await AsyncStorage.setItem('userToken', v.userToken);
         this.props.navigation.navigate('Main');
       } else {
-        Alert.alert(
-          '提示信息',
-          '服务端出现错误，请稍后再试',
-          [
-            {
-              text: '我知道了',
-              onPress: () => {
-                console.log('button press');
-              },
-            },
-          ],
-          {cancelable: false},
-        );
+        toast.showError('服务端出现异常，请稍后再试');
       }
     } catch (e) {
       console.log(e);
@@ -104,7 +92,7 @@ export default class LoginScreen extends React.Component {
           icon="account-plus"
           mode="contained"
           onPress={() => {
-            toast.show('你要去详情页？', '点我', () => {
+            toast.showWarning('你要去详情页？', '点我', () => {
               this.props.navigation.navigate('Register');
             });
             //this.props.navigation.navigate('Register');
