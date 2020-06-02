@@ -1,21 +1,18 @@
 import React from 'react';
-import {BackHandler, ToastAndroid} from 'react-native';
+//redux状态管理
 import {Provider} from 'react-redux';
 import store from '@/store/index';
+//app启动屏相关
 import SplashScreen from 'react-native-splash-screen';
+//视图逻辑路口（包括路由导航）
 import AppViewContainer from './src/AppViewEntry';
-import colors from '@/constants/Colors';
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: colors.main,
-  },
-};
-
+//主题相关
+import {Provider as PaperProvider} from 'react-native-paper';
+import theme from '@/constants/Theme';
+//回退操作相关 根据配置管理是否需要二次确认退出app
+import {BackHandler} from 'react-native';
+import {EXIT_APP_NEED_CONFIRM} from '@/constants/Config';
+import backActionConfirmHandler from '@/utils/backActionConfirmHandler';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -25,30 +22,21 @@ export default class App extends React.Component {
   }
   componentDidMount() {
     SplashScreen.hide();
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    EXIT_APP_NEED_CONFIRM &&
+      BackHandler.addEventListener(
+        'hardwareBackPress',
+        backActionConfirmHandler,
+      );
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+    EXIT_APP_NEED_CONFIRM &&
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        backActionConfirmHandler,
+      );
   }
 
-  handleBackPress = () => {
-    this.exitAppAfter2BackAction();
-    return true;
-  };
-
-  exitAppAfter2BackAction = () => {
-    //两次回退时间间隔小于1秒
-    const timeStampNow = Date.now();
-    if (timeStampNow - this.state.firstBackActionTime < 1500) {
-      BackHandler.exitApp();
-    } else {
-      ToastAndroid.show('再按一次退出!', ToastAndroid.SHORT);
-    }
-    this.setState({
-      firstBackActionTime: timeStampNow,
-    });
-  };
   render() {
     return (
       <Provider store={store}>
