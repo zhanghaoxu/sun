@@ -14,12 +14,6 @@ import {BackHandler} from 'react-native';
 import {EXIT_APP_NEED_CONFIRM} from '@/constants/Config';
 import backActionConfirmHandler from '@/utils/backActionConfirmHandler';
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstBackActionTime: 0,
-    };
-  }
   componentDidMount() {
     SplashScreen.hide();
     EXIT_APP_NEED_CONFIRM &&
