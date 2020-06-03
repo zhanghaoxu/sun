@@ -92,10 +92,7 @@ export default class LoginScreen extends React.Component {
           icon="account-plus"
           mode="contained"
           onPress={() => {
-            toast.showWarning('你要去详情页？', '点我', () => {
-              this.props.navigation.navigate('Register');
-            });
-            //this.props.navigation.navigate('Register');
+            this.props.navigation.navigate('Register');
           }}>
           还没有账号？点我注册
         </Button>

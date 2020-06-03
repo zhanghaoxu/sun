@@ -154,7 +154,7 @@ export default class RegisterScreen extends React.Component {
           onChangeText={password => this.setState({password})}
         />
         <TextInputWithError
-          label="Repassword"
+          label="RePassword"
           error={!!this.state.repasswordErrorMessage}
           errorMessage={this.state.repasswordErrorMessage}
           style={styles.inputBox}
