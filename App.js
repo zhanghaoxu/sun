@@ -13,6 +13,8 @@ import theme from '@/constants/Theme';
 import {BackHandler} from 'react-native';
 import {EXIT_APP_NEED_CONFIRM} from '@/constants/Config';
 import backActionConfirmHandler from '@/utils/backActionConfirmHandler';
+import configPushNotification from '@/utils/pushNotification';
+configPushNotification();
 export default class App extends React.Component {
   componentDidMount() {
     SplashScreen.hide();

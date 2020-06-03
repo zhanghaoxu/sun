@@ -6,6 +6,8 @@ import {emailPattern} from '@/utils/pattern';
 import {login} from '@/apis/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import toast from '@/utils/toast';
+var PushNotification = require('react-native-push-notification');
+
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -92,7 +94,9 @@ export default class LoginScreen extends React.Component {
           icon="account-plus"
           mode="contained"
           onPress={() => {
-            this.props.navigation.navigate('Register');
+            PushNotification.localNotification({
+              message: 'My Notification Message', // (required)
+            });
           }}>
           还没有账号？点我注册
         </Button>
