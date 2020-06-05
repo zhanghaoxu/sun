@@ -54,6 +54,9 @@ export default class App extends React.Component {
       console.log('mobileNumberListener:' + JSON.stringify(result));
     };
     JPush.addMobileNumberListener(this.mobileNumberListener);
+    JPush.getRegistrationID(result =>
+      console.log('registerID:' + JSON.stringify(result)),
+    );
   }
 
   componentWillUnmount() {
