@@ -9,27 +9,18 @@ import AppViewContainer from './src/AppViewEntry';
 //主题相关
 import {Provider as PaperProvider} from 'react-native-paper';
 import theme from '@/constants/Theme';
-//回退操作相关 根据配置管理是否需要二次确认退出app
-import {BackHandler} from 'react-native';
-import {EXIT_APP_NEED_CONFIRM} from '@/constants/Config';
-import backActionConfirmHandler from '@/utils/backActionConfirmHandler';
+//退出确认
+import backActionConfirm from '@/utils/backActionConfirm';
 
 export default class App extends React.Component {
   componentDidMount() {
     SplashScreen.hide();
-    EXIT_APP_NEED_CONFIRM &&
-      BackHandler.addEventListener(
-        'hardwareBackPress',
-        backActionConfirmHandler,
-      );
+    //退出确认（根据配置确定行为）
+    backActionConfirm.addListener();
   }
 
   componentWillUnmount() {
-    EXIT_APP_NEED_CONFIRM &&
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        backActionConfirmHandler,
-      );
+    backActionConfirm.removeListener();
   }
 
   render() {
