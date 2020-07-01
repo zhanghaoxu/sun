@@ -3,26 +3,36 @@
 import {
   EXIT_APP_NEED_CONFIRM,
   EXIT_APP_TIME_DISTANCE,
-} from '@/constants/Config';
+} from '../constants/Config';
 import {BackHandler, ToastAndroid} from 'react-native';
 
-let __lastBackActionTime = 0;
+let __lastBackActionTime: number = 0;
 
-class BackActionConfirm {
+interface BackActionConfirmHandler {
+  __setLastBackActionTime(v: number): void;
+
+  __exitAppAfter2BackAction(): boolean;
+
+  addListener(): void;
+
+  removeListener(): void;
+}
+
+class BackActionConfirm implements BackActionConfirmHandler {
   constructor() {
     this.__exitAppAfter2BackAction = this.__exitAppAfter2BackAction.bind(this);
   }
 
-  __setLastBackActionTime(v) {
+  __setLastBackActionTime(v: number): void {
     __lastBackActionTime = v;
   }
 
-  __exitAppAfter2BackAction() {
+  __exitAppAfter2BackAction(): boolean {
     //两次回退时间间隔小于1.5秒
     const timeStampNow = Date.now();
     if (timeStampNow - __lastBackActionTime < EXIT_APP_TIME_DISTANCE) {
       BackHandler.exitApp();
-      return;
+      return false;
     } else {
       console.log(111);
       ToastAndroid.show('再按一次退出!', ToastAndroid.SHORT);
@@ -31,14 +41,14 @@ class BackActionConfirm {
     return true;
   }
 
-  addListener() {
+  addListener(): void {
     BackHandler.addEventListener(
       'hardwareBackPress',
       this.__exitAppAfter2BackAction,
     );
   }
 
-  removeListener() {
+  removeListener(): void {
     BackHandler.removeEventListener(
       'hardwareBackPress',
       this.__exitAppAfter2BackAction,
@@ -46,11 +56,15 @@ class BackActionConfirm {
   }
 }
 
-let backActionConfirm = EXIT_APP_NEED_CONFIRM
+let backActionConfirm: BackActionConfirmHandler = EXIT_APP_NEED_CONFIRM
   ? new BackActionConfirm()
   : {
-      addListener() {},
-      removerListener() {},
+      __exitAppAfter2BackAction() {
+        return false;
+      },
+      __setLastBackActionTime(): void {},
+      addListener(): void {},
+      removeListener(): void {},
     };
 
 export default backActionConfirm;
