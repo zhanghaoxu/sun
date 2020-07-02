@@ -8,7 +8,7 @@ import {BackHandler, ToastAndroid} from 'react-native';
 
 let __lastBackActionTime: number = 0;
 
-interface BackActionConfirmHandler {
+type BackActionConfirmHandler = {
   __setLastBackActionTime(v: number): void;
 
   __exitAppAfter2BackAction(): boolean;
@@ -16,9 +16,9 @@ interface BackActionConfirmHandler {
   addListener(): void;
 
   removeListener(): void;
-}
+};
 
-class BackActionConfirm implements BackActionConfirmHandler {
+class BackActionConfirm {
   constructor() {
     this.__exitAppAfter2BackAction = this.__exitAppAfter2BackAction.bind(this);
   }
