@@ -1,15 +1,22 @@
-import Toast from 'react-native-root-toast';
+import Toast, {ToastOptions} from 'react-native-root-toast';
+
+interface MyToastOptions extends ToastOptions {
+  text: string;
+}
 
 class Toasting {
   __toast = null;
-  __show(options) {
+  __show(options: MyToastOptions) {
     if (!options.text) {
       console.warn('toast text is required');
       return;
     }
+    //增加两侧间距
+    options.text = '    ' + options.text + '    ';
+
     this.__toast = Toast.show(options.text, {
       duration: options.duration ? options.duration : Toast.durations.SHORT,
-      position: options.position ? options.position : 75,
+      position: options.position ? options.position : -75,
       shadow: true,
       animation: true,
       hideOnPress: true,
@@ -33,28 +40,28 @@ class Toasting {
       },
     });
   }
-  show(text) {
+  show(text: string) {
     this.showInfo(text);
   }
-  showInfo(text) {
+  showInfo(text: string) {
     this.__show({
       text,
       backgroundColor: '#000',
     });
   }
-  showWarning(text) {
+  showWarning(text: string) {
     this.__show({
       text,
       backgroundColor: 'orange',
     });
   }
-  showError(text) {
+  showError(text: string) {
     this.__show({
       text,
       backgroundColor: 'red',
     });
   }
-  showSuccess(text) {
+  showSuccess(text: string) {
     this.__show({
       text,
       backgroundColor: 'green',
@@ -64,4 +71,5 @@ class Toasting {
     Toast.hide(this.__toast);
   }
 }
+
 export default new Toasting();

@@ -1,6 +1,7 @@
-export function setLoadingState(v) {
+export function setLoadingState(loading, loadingText) {
   return {
     type: 'SET_LOADING_STATE',
-    loading: v,
+    loading,
+    loadingText,
   };
 }

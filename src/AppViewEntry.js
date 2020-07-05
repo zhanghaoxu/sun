@@ -13,6 +13,7 @@ class AppViewEntry extends React.Component {
   render() {
     let {
       loading,
+      loadingText,
       statusBarBackgroundColor,
       statusBarHidden,
       statusBarTranslucent,
@@ -26,7 +27,7 @@ class AppViewEntry extends React.Component {
           translucent={statusBarTranslucent}
           backgroundColor={statusBarBackgroundColor}
         />
-        <Loading isVisible={loading} />
+        <Loading isVisible={loading} text={loadingText} />
         <AppNavigator
           ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);

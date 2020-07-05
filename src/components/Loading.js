@@ -8,7 +8,7 @@ export default function Loading(props) {
         <ActivityIndicator size="large" color="#ccc" />
         <View style={styles.textContainerStyle}>
           <Text style={styles.textStyle}>
-            {props.text ? props.text : '加载中......'}
+            {props.text ? props.text : '拼命加载中...'}
           </Text>
         </View>
       </View>

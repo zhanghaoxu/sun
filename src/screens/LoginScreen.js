@@ -5,7 +5,7 @@ import TextInputWithError from '@/components/TextInputWithError';
 import {emailPattern} from '@/utils/pattern';
 import {login} from '@/apis/auth';
 import AsyncStorage from '@react-native-community/async-storage';
-import toast from '@/utils/toast';
+import toast from '../utils/toast';
 var PushNotification = require('react-native-push-notification');
 
 export default class LoginScreen extends React.Component {
@@ -94,9 +94,10 @@ export default class LoginScreen extends React.Component {
           icon="account-plus"
           mode="contained"
           onPress={() => {
-            PushNotification.localNotification({
+            /* PushNotification.localNotification({
               message: 'My Notification Message', // (required)
-            });
+            }); */
+            toast.showError('网络错误！');
           }}>
           还没有账号？点我注册
         </Button>
