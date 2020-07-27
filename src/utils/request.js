@@ -1,9 +1,9 @@
 import Config from 'react-native-config';
 import AsyncStorage from '@react-native-community/async-storage';
-import NavigationService from '@/utils/navigationService';
 import loading from '@/utils/loading';
 import toast from '@/utils/toast';
 
+const baseUrl = 'http://192.168.0.147:7001'; //Config.API_SERVICE_BASE_URL;
 class Request {
   async _getUserToken() {
     let userToken = await AsyncStorage.getItem('userToken');
@@ -55,7 +55,7 @@ class Request {
       loading.show();
     }
 
-    return fetch(Config.API_SERVICE_BASE_URL + url, options)
+    return fetch(baseUrl + url, options)
       .then(response => {
         loading.hide();
         return response.json();

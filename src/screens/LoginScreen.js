@@ -97,7 +97,8 @@ export default class LoginScreen extends React.Component {
             /* PushNotification.localNotification({
               message: 'My Notification Message', // (required)
             }); */
-            toast.showError('网络错误！');
+            //toast.showError('网络错误！');
+            this.props.navigation.navigate('Register');
           }}>
           还没有账号？点我注册
         </Button>
