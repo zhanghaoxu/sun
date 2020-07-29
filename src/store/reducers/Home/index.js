@@ -1,24 +1,23 @@
 const initialState = {
-  userInfo: {
-    name: "",
-    age: 0
-  }
+  finishList: [],
+  unFinishList: [],
+  allList: [],
 };
 
 const HomeReducers = (state = initialState, action) => {
   switch (action.type) {
-    case "CHANGE_NAME":
-      return Object.assign({}, state, {
-        userInfo: {
-          name: action.name
-        }
-      });
-    case "CHANGE_AGE":
-      return Object.assign({}, state, {
-        userInfo: {
-          age: action.age
-        }
-      });
+    case 'addFinishList':
+      return {
+        ...state,
+        finishList: [...action.finishList, ...state.finishList],
+      };
+    case 'addUnFinishList':
+      return {
+        ...state,
+        unFinishList: [...action.unFinishList, ...state.unFinishList],
+      };
+    case 'allList':
+      return {...state, allList: [...action.allList, ...state.allList]};
     default:
       return state;
   }

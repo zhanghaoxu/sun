@@ -2,11 +2,22 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MyWebView from '@/components/MyWebView';
 import Config from 'react-native-config';
+import Colors from '@/constants/Colors';
 import {TextInput, Button, List, Dimensions} from 'react-native-paper';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 const expanded = () => {};
 const handlePress = () => {};
-const FirstRoute = () => (
+
+const BaseList = props => {
+  return (
+    <List.Section>
+      {props.list.map(v => {
+        return <List.Item title={v.name} />;
+      })}
+    </List.Section>
+  );
+};
+const unFinish = () => (
   <View style={{}}>
     <List.Section title="Accordions">
       <List.Accordion
@@ -28,9 +39,11 @@ const FirstRoute = () => (
   </View>
 );
 
-const SecondRoute = () => (
-  <View style={[styles.scene, {backgroundColor: '#673ab7'}]} />
-);
+const finish = () => <View style={{}} />;
+
+const all = () => {
+  return <View style={{}} />;
+};
 
 export default function HomeScreen(props) {
   const webview_url = `${Config.WEBVIEW_BASE_URL}#/home`;
@@ -39,14 +52,17 @@ export default function HomeScreen(props) {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'First'},
-    {key: 'second', title: 'Second'},
+    {key: 'unFinish', title: '未完成'},
+    {key: 'finish', title: '已完成'},
+    {key: 'all', title: '所有'},
   ]);
 
   const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
+    unFinish,
+    finish,
+    all,
   });
+
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
@@ -60,6 +76,15 @@ export default function HomeScreen(props) {
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              indicatorStyle={{backgroundColor: Colors.main}}
+              style={{
+                backgroundColor: Colors.main,
+              }}
+            />
+          )}
           initialLayout={{
             flex: 1,
           }}

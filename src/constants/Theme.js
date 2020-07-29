@@ -1,12 +1,12 @@
 import {DefaultTheme} from 'react-native-paper';
-import colors from '@/constants/Colors';
+import Colors from '@/constants/Colors';
 
 const theme = {
   ...DefaultTheme,
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: colors.main,
+    primary: Colors.main,
   },
 };
 
