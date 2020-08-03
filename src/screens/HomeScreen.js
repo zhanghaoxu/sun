@@ -1,73 +1,56 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MyWebView from '@/components/MyWebView';
-import Config from 'react-native-config';
+
 import Colors from '@/constants/Colors';
-import {TextInput, Button, List, Dimensions} from 'react-native-paper';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-const expanded = () => {};
-const handlePress = () => {};
+import {TextInput, Button} from 'react-native-paper';
+import {TabView, TabBar} from 'react-native-tab-view';
+import {fetchList, addTodo} from '@/store/reducers/Home';
 
-const BaseList = props => {
-  return (
-    <List.Section>
-      {props.list.map(v => {
-        return <List.Item title={v.name} />;
-      })}
-    </List.Section>
-  );
-};
-const unFinish = () => (
-  <View style={{}}>
-    <List.Section title="Accordions">
-      <List.Accordion
-        title="Uncontrolled Accordion"
-        left={props => <List.Icon {...props} icon="folder" />}>
-        <List.Item title="First item" />
-        <List.Item title="Second item" />
-      </List.Accordion>
-
-      <List.Accordion
-        title="Controlled Accordion"
-        left={props => <List.Icon {...props} icon="folder" />}
-        expanded={expanded}
-        onPress={handlePress}>
-        <List.Item title="First item" />
-        <List.Item title="Second item" />
-      </List.Accordion>
-    </List.Section>
-  </View>
+import renderScene from './components/RenderScene';
+const TabBarView = props => (
+  <TabBar
+    {...props}
+    indicatorStyle={{backgroundColor: Colors.main}}
+    style={{
+      backgroundColor: Colors.main,
+    }}
+  />
 );
 
-const finish = () => <View style={{}} />;
-
-const all = () => {
-  return <View style={{}} />;
-};
-
 export default function HomeScreen(props) {
-  const webview_url = `${Config.WEBVIEW_BASE_URL}#/home`;
-
-  const [value, setValue] = React.useState('left');
+  let {dispatch} = props;
 
   const [index, setIndex] = React.useState(0);
+  const [todo, setTodo] = React.useState('');
   const [routes] = React.useState([
     {key: 'unFinish', title: '未完成'},
     {key: 'finish', title: '已完成'},
     {key: 'all', title: '所有'},
   ]);
 
-  const renderScene = SceneMap({
-    unFinish,
-    finish,
-    all,
-  });
+  React.useEffect(() => {
+    dispatch(fetchList('unFinish'));
+  }, [dispatch]);
+
+  const handleAdd = () => {
+    dispatch(addTodo(todo)).then(() => {
+      setTodo('');
+    });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
-        <TextInput style={styles.inputViewText} label="待办事宜" />
-        <Button mode="contained" style={styles.inputViewButton}>
+        <TextInput
+          style={styles.inputViewText}
+          label="待办事宜"
+          value={todo}
+          onChangeText={todo => setTodo(todo)}
+        />
+        <Button
+          onPress={handleAdd}
+          mode="contained"
+          style={styles.inputViewButton}>
           添加
         </Button>
       </View>
@@ -76,15 +59,7 @@ export default function HomeScreen(props) {
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={{backgroundColor: Colors.main}}
-              style={{
-                backgroundColor: Colors.main,
-              }}
-            />
-          )}
+          renderTabBar={TabBarView}
           initialLayout={{
             flex: 1,
           }}
@@ -103,6 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     padding: 10,
+    overflow: 'scroll',
   },
   inputView: {
     flexDirection: 'row',
@@ -121,5 +97,6 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     marginTop: 10,
+    overflow: 'scroll',
   },
 });

@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import loading from '@/utils/loading';
 import toast from '@/utils/toast';
 
-const baseUrl = 'http://192.168.0.147:7001'; //Config.API_SERVICE_BASE_URL;
+const baseUrl = Config.API_SERVICE_BASE_URL;
 class Request {
   async _getUserToken() {
     let userToken = await AsyncStorage.getItem('userToken');
@@ -43,40 +43,52 @@ class Request {
     const data = options.data;
     if (data) {
       if (typeof data !== 'object') {
-        throw new Error('数据格式错误');
+        throw new Error('options.data数据格式错误，支持Object/FormData');
       }
-      if (options.headers['Content-Type'] !== 'application/json') {
-        throw new Error('暂不支持的content-type');
+
+      const isUploadFile = data instanceof FormData;
+      //文件上传
+      if (isUploadFile) {
+        options.body = data;
+        // 使用默认
+        delete options.headers['Content-Type'];
+      } else {
+        //非文件上传 统一使用json
+        options.body = data instanceof FormData ? data : JSON.stringify(data);
       }
-      options.body = JSON.stringify(data);
     }
 
     if (options.loading) {
       loading.show();
     }
 
-    return fetch(baseUrl + url, options)
-      .then(response => {
-        loading.hide();
-        return response.json();
-      })
-      .then(json => {
-        if (json.code === 200) {
-          return json.data;
-        } else if (json.code === -2) {
-          return null;
-
-          //NavigationService.navigate('Auth');
-        } else {
-          toast.show(json.msg ? json.msg : '服务端错误');
-          return null;
-        }
-      })
-      .catch(e => {
-        loading.hide();
-        toast.show('网络错误');
-        console.log(e);
-      });
+    return new Promise(function(resolve, reject) {
+      fetch(baseUrl + url, options)
+        .then(response => {
+          loading.hide();
+          const {status} = response;
+          //成功
+          if (status === 200) {
+            return response.json();
+          } else {
+            throw new Error(status);
+          }
+        })
+        .then(json => {
+          if (json.code === 200) {
+            resolve(json.data);
+          } else {
+            throw new Error(json.msg ? json.msg : '服务端错误');
+          }
+        })
+        .catch(e => {
+          loading.hide();
+          reject(e);
+          toast.showError(
+            e.message ? `请求出错:${e.message}` : '网络错误或请求被拦截！',
+          );
+        });
+    });
   }
 
   post(options) {

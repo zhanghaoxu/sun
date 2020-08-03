@@ -7,6 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "start-with-port": "react-native start --port 8789",
+    "company":"set ENVFILE=.env.company && react-native run-android",
+    "home":"set ENVFILE=.env.home && react-native run-android",
     "test": "jest",
     "lint": "eslint ."
   },

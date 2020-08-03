@@ -7,6 +7,7 @@ interface MyToastOptions extends ToastOptions {
 class Toasting {
   __toast = null;
   __show(options: MyToastOptions) {
+    console.log(222);
     if (!options.text) {
       console.warn('toast text is required');
       return;
@@ -18,7 +19,7 @@ class Toasting {
       duration: options.duration ? options.duration : Toast.durations.SHORT,
       position: options.position ? options.position : -75,
       shadow: true,
-      animation: true,
+      animation: false,
       hideOnPress: true,
       opacity: options.opacity ? options.opacity : 0.9,
       delay: 0,

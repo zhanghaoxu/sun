@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 let HomeContainer = connect(state => ({
   globalState: state.global,
+  homeState:state.home
 }))(HomeScreen);
 
 export default HomeContainer;

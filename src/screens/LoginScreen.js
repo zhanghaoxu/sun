@@ -6,6 +6,7 @@ import {emailPattern} from '@/utils/pattern';
 import {login} from '@/apis/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import toast from '../utils/toast';
+import {ScrollView} from 'react-native-gesture-handler';
 var PushNotification = require('react-native-push-notification');
 
 export default class LoginScreen extends React.Component {
@@ -65,43 +66,47 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInputWithError
-          label="Email"
-          error={!!this.state.emailErrorMessage}
-          errorMessage={this.state.emailErrorMessage}
-          value={this.state.email}
-          style={styles.inputBox}
-          onChangeText={email => this.setState({email})}
-        />
-        <TextInputWithError
-          label="Password"
-          error={!!this.state.passwordErrorMessage}
-          errorMessage={this.state.passwordErrorMessage}
-          style={styles.inputBox}
-          secureTextEntry={true}
-          value={this.state.password}
-          onChangeText={password => this.setState({password})}
-        />
-        <Button
-          style={styles.loginButton}
-          icon="account"
-          mode="contained"
-          onPress={() => this.login()}>
-          立即登录
-        </Button>
-        <Button
-          style={styles.registerButton}
-          icon="account-plus"
-          mode="contained"
-          onPress={() => {
-            /* PushNotification.localNotification({
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.innerContainer}>
+            <TextInputWithError
+              label="Email"
+              error={!!this.state.emailErrorMessage}
+              errorMessage={this.state.emailErrorMessage}
+              value={this.state.email}
+              style={styles.inputBox}
+              onChangeText={email => this.setState({email})}
+            />
+            <TextInputWithError
+              label="Password"
+              error={!!this.state.passwordErrorMessage}
+              errorMessage={this.state.passwordErrorMessage}
+              style={styles.inputBox}
+              secureTextEntry={true}
+              value={this.state.password}
+              onChangeText={password => this.setState({password})}
+            />
+            <Button
+              style={styles.loginButton}
+              icon="account"
+              mode="contained"
+              onPress={() => this.login()}>
+              立即登录
+            </Button>
+            <Button
+              style={styles.registerButton}
+              icon="account-plus"
+              mode="contained"
+              onPress={() => {
+                /* PushNotification.localNotification({
               message: 'My Notification Message', // (required)
             }); */
-            //toast.showError('网络错误！');
-            this.props.navigation.navigate('Register');
-          }}>
-          还没有账号？点我注册
-        </Button>
+                //toast.showError('网络错误！');
+                this.props.navigation.navigate('Register');
+              }}>
+              还没有账号？点我注册
+            </Button>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -110,9 +115,14 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80,
-    paddingLeft: 20,
-    paddingRight: 20,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  innerContainer: {
+    margin: 80,
+    marginLeft: 20,
+    marginRight: 20,
   },
   registerButton: {
     marginTop: 20,

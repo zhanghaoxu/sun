@@ -4,6 +4,7 @@ import {TextInput, Button} from 'react-native-paper';
 import {register as registerApi} from '@/apis/auth';
 import TextInputWithError from '@/components/TextInputWithError';
 import {emailPattern} from '@/utils/pattern';
+import {ScrollView} from 'react-native-gesture-handler';
 export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -127,55 +128,59 @@ export default class RegisterScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInputWithError
-          label="Nick Name"
-          maxLength={30}
-          error={!!this.state.nickNameErrorMessage}
-          errorMessage={this.state.nickNameErrorMessage}
-          style={styles.inputBox}
-          value={this.state.nickName}
-          onChangeText={nickName => this.setState({nickName})}
-        />
-        <TextInputWithError
-          label="Email"
-          error={!!this.state.emailErrorMessage}
-          errorMessage={this.state.emailErrorMessage}
-          value={this.state.email}
-          style={styles.inputBox}
-          onChangeText={email => this.setState({email})}
-        />
-        <TextInputWithError
-          label="Password"
-          error={!!this.state.passwordErrorMessage}
-          errorMessage={this.state.passwordErrorMessage}
-          style={styles.inputBox}
-          secureTextEntry={true}
-          value={this.state.password}
-          onChangeText={password => this.setState({password})}
-        />
-        <TextInputWithError
-          label="RePassword"
-          error={!!this.state.repasswordErrorMessage}
-          errorMessage={this.state.repasswordErrorMessage}
-          style={styles.inputBox}
-          secureTextEntry={true}
-          value={this.state.repassword}
-          onChangeText={repassword => this.setState({repassword})}
-        />
-        <Button
-          style={styles.registerButton}
-          icon="account-plus"
-          mode="contained"
-          onPress={() => this.register()}>
-          立即注册
-        </Button>
-        <Button
-          style={styles.loginButton}
-          icon="account"
-          mode="contained"
-          onPress={() => this.props.navigation.pop()}>
-          已有账号？点我登陆
-        </Button>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.innerContainer}>
+            <TextInputWithError
+              label="Nick Name"
+              maxLength={30}
+              error={!!this.state.nickNameErrorMessage}
+              errorMessage={this.state.nickNameErrorMessage}
+              style={styles.inputBox}
+              value={this.state.nickName}
+              onChangeText={nickName => this.setState({nickName})}
+            />
+            <TextInputWithError
+              label="Email"
+              error={!!this.state.emailErrorMessage}
+              errorMessage={this.state.emailErrorMessage}
+              value={this.state.email}
+              style={styles.inputBox}
+              onChangeText={email => this.setState({email})}
+            />
+            <TextInputWithError
+              label="Password"
+              error={!!this.state.passwordErrorMessage}
+              errorMessage={this.state.passwordErrorMessage}
+              style={styles.inputBox}
+              secureTextEntry={true}
+              value={this.state.password}
+              onChangeText={password => this.setState({password})}
+            />
+            <TextInputWithError
+              label="RePassword"
+              error={!!this.state.repasswordErrorMessage}
+              errorMessage={this.state.repasswordErrorMessage}
+              style={styles.inputBox}
+              secureTextEntry={true}
+              value={this.state.repassword}
+              onChangeText={repassword => this.setState({repassword})}
+            />
+            <Button
+              style={styles.registerButton}
+              icon="account-plus"
+              mode="contained"
+              onPress={() => this.register()}>
+              立即注册
+            </Button>
+            <Button
+              style={styles.loginButton}
+              icon="account"
+              mode="contained"
+              onPress={() => this.props.navigation.pop()}>
+              已有账号？点我登陆
+            </Button>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -184,9 +189,14 @@ export default class RegisterScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80,
-    paddingLeft: 20,
-    paddingRight: 20,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  innerContainer: {
+    margin: 80,
+    marginLeft: 20,
+    marginRight: 20,
   },
   registerButton: {
     marginTop: 30,
