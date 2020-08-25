@@ -12,24 +12,21 @@ import theme from './src/constants/Theme';
 //退出确认
 import backActionConfirm from './src/utils/backActionConfirm';
 
-export default class App extends React.Component {
-  componentDidMount() {
+export default function App() {
+  React.useEffect(() => {
     SplashScreen.hide();
     //退出确认（根据配置确定行为）
     backActionConfirm.addListener();
-  }
+    return () => {
+      backActionConfirm.removeListener();
+    };
+  }, []);
 
-  componentWillUnmount() {
-    backActionConfirm.removeListener();
-  }
-
-  render() {
-    return (
-      <Provider store={store}>
-        <PaperProvider theme={theme}>
-          <AppViewContainer />
-        </PaperProvider>
-      </Provider>
-    );
-  }
+  return (
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <AppViewContainer />
+      </PaperProvider>
+    </Provider>
+  );
 }
