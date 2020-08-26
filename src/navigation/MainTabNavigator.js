@@ -13,23 +13,7 @@ const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator
-      mode="modal"
-      headerMode="none"
-      navigationOptions={({navigation}) => {
-        let tabBarVisible = true;
-        if (navigation.state.index > 0) {
-          tabBarVisible = false;
-        }
-
-        return {
-          tabBarVisible,
-          tabBarLabel: '首页',
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} name="home" />
-          ),
-        };
-      }}>
+    <HomeStack.Navigator mode="modal" headerMode="none">
       <HomeStack.Screen name="Home" component={HomeContainer} />
       <HomeStack.Screen name="WebView" component={WebViewContainer} />
     </HomeStack.Navigator>
@@ -40,23 +24,7 @@ const FindStack = createStackNavigator();
 
 function FindStackScreen() {
   return (
-    <FindStack.Navigator
-      mode="modal"
-      headerMode="none"
-      navigationOptions={({navigation}) => {
-        let tabBarVisible = true;
-        if (navigation.state.index > 0) {
-          tabBarVisible = false;
-        }
-
-        return {
-          tabBarVisible,
-          tabBarLabel: '发现',
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} name="search1" />
-          ),
-        };
-      }}>
+    <FindStack.Navigator mode="modal" headerMode="none">
       <FindStack.Screen name="Find" component={FindContainer} />
       <FindStack.Screen name="WebView" component={WebViewContainer} />
     </FindStack.Navigator>
@@ -67,23 +35,7 @@ const MyStack = createStackNavigator();
 
 function MyStackScreen() {
   return (
-    <MyStack.Navigator
-      mode="modal"
-      headerMode="none"
-      navigationOptions={({navigation}) => {
-        let tabBarVisible = true;
-        if (navigation.state.index > 0) {
-          tabBarVisible = false;
-        }
-
-        return {
-          tabBarVisible,
-          tabBarLabel: '我的',
-          tabBarIcon: ({focused}) => (
-            <TabBarIcon focused={focused} name="user" />
-          ),
-        };
-      }}>
+    <MyStack.Navigator mode="modal" headerMode="none">
       <MyStack.Screen name="My" component={MyContainer} />
       <MyStack.Screen name="WebView" component={WebViewContainer} />
     </MyStack.Navigator>
@@ -96,6 +48,29 @@ function MainTabNavigator() {
     <Tab.Navigator
       initialRouteName="HomeStack"
       backBehavior="none"
+      screenOptions={({route}) => {
+        const tabBarMap = {
+          HomeStack: {
+            name: '首页',
+            icon: 'home',
+          },
+          FindStack: {
+            name: '发现',
+            icon: 'search1',
+          },
+          MyStack: {
+            name: '我的',
+            icon: 'user',
+          },
+        };
+        const {name, icon} = tabBarMap[route.name];
+        return {
+          tabBarLabel: name,
+          tabBarIcon: ({focused}) => (
+            <TabBarIcon focused={focused} name={icon} />
+          ),
+        };
+      }}
       tabBarOptions={{
         activeTintColor: Colors.tabIconSelected,
       }}>

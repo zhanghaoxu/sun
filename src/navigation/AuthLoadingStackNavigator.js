@@ -6,10 +6,13 @@ const AuthLoadingStack = createStackNavigator();
 
 export default function AuthLoadingStackScreen() {
   return (
-    <AuthLoadingStack.Navigator mode="modal" headerMode="nome">
+    <AuthLoadingStack.Navigator>
       <AuthLoadingStack.Screen
         name="AuthLoading"
         component={AuthLoadingScreen}
+        options={{
+          headerShown: false,
+        }}
       />
     </AuthLoadingStack.Navigator>
   );
