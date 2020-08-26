@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 //redux状态管理
 import {Provider} from 'react-redux';

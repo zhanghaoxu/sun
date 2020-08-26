@@ -2,40 +2,29 @@ import React from 'react';
 import {View, StatusBar, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import AppNavigator from '@/navigation/AppNavigator';
-import NavigationService from '@/utils/navigationService';
 import Loading from '@/components/Loading';
 
-class AppViewEntry extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function AppViewEntry(props) {
+  const {
+    loading,
+    loadingText,
+    statusBarBackgroundColor,
+    statusBarHidden,
+    statusBarTranslucent,
+  } = props.globalState;
 
-  render() {
-    let {
-      loading,
-      loadingText,
-      statusBarBackgroundColor,
-      statusBarHidden,
-      statusBarTranslucent,
-    } = this.props.globalState;
-
-    return (
-      <View style={styles.container}>
-        <StatusBar
-          hidden={statusBarHidden}
-          animated={true}
-          translucent={statusBarTranslucent}
-          backgroundColor={statusBarBackgroundColor}
-        />
-        <Loading isVisible={loading} text={loadingText} />
-        <AppNavigator
-          ref={navigatorRef => {
-            NavigationService.setTopLevelNavigator(navigatorRef);
-          }}
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <StatusBar
+        hidden={statusBarHidden}
+        animated={true}
+        translucent={statusBarTranslucent}
+        backgroundColor={statusBarBackgroundColor}
+      />
+      <Loading isVisible={loading} text={loadingText} />
+      <AppNavigator />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
