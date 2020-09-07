@@ -49,12 +49,15 @@ class WebViewScreen extends Component {
 
   render() {
     let {url = 'https://www.baidu.com'} = this.props;
-
+    const runFirst = `
+      window.isNativeApp = true;
+      true; // note: this is required, or you'll sometimes get silent failures
+    `;
     return (
       <View style={{flex: 1}}>
         <WebView
           ref={myWeb => (this.webView = myWeb)}
-          injectedJavaScript={injectedJavaScript.toString()}
+          injectedJavaScriptBeforeContentLoaded={runFirst}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onMessage={this.handlerH5Event.bind(this)}
           source={{uri: url}}
