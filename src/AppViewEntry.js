@@ -11,7 +11,7 @@ function AppViewEntry(props) {
     statusBarBackgroundColor,
     statusBarHidden,
     statusBarTranslucent,
-  } = props.globalState;
+  } = props.global;
 
   return (
     <View style={styles.container}>
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
 });
 
-let AppViewContainer = connect(state => ({
-  globalState: state.global,
+let AppViewContainer = connect(({global}) => ({
+  global,
 }))(AppViewEntry);
 
 export default AppViewContainer;

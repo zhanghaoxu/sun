@@ -1,6 +1,7 @@
-import store from '../store/index';
-import {setLoadingState} from '../store/actions/Global';
+import dva from './dva';
 
+const dispatch = dva.getDispatch();
+console.log(dispatch);
 type LoadingType = {
   show(text: string): void;
   hide(): void;
@@ -8,10 +9,15 @@ type LoadingType = {
 
 class Loading {
   show(text: string) {
-    store.dispatch(setLoadingState(true, text));
+    dispatch({
+      type: 'global/setShowLoading',
+      payload: text,
+    });
   }
   hide() {
-    store.dispatch(setLoadingState(false));
+    dispatch({
+      type: 'global/setHideLoading',
+    });
   }
 }
 

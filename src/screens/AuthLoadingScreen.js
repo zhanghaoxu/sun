@@ -1,10 +1,10 @@
 import React from 'react';
 import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import store from '@/store';
-import {setIsLogin, postIsLogin} from '@/store/actions/Auth';
+import dva from '@/utils/dva';
 import colors from '@/constants/Colors';
-import toast from '@/utils/toast';
+
+const dispatch = dva.getDispatch();
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
@@ -16,16 +16,18 @@ class AuthLoadingScreen extends React.Component {
     console.log(userToken);
     let isLogin = 0;
     if (!userToken) {
-      store.dispatch(setIsLogin(0));
+      dispatch({
+        type: 'auth/isLogin',
+        payload: 0,
+      });
       //无userToken
     } else {
       try {
-        let result = await store.dispatch(postIsLogin());
+        let result = await dispatch({
+          type: 'setIsLogin',
+        });
         console.log('result:', result);
         isLogin = result.isLogin;
-        if (!isLogin) {
-          await AsyncStorage.removeItem('userToken');
-        }
       } catch (e) {
         console.log(e);
       }
